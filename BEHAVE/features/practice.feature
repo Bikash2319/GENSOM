@@ -9,3 +9,4 @@ Feature: Try to login with multiple credentials
             | email                      | password   |
             | bikash.sahoo@sharajman.com | Admin@1234 |
             | bikash.sahoo@email.com     | Admin      |
+
