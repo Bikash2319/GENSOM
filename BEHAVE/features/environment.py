@@ -25,9 +25,10 @@ def before_scenario(context, scenario):
         context.driver.find_element(By.XPATH, "//input[@formcontrolname='email']")\
             .send_keys("bikash.sahoo@sharajman.com")
         context.driver.find_element(By.XPATH, "//input[@formcontrolname='password']")\
-            .send_keys("Admin1234")
+            .send_keys("Admin@1234")
         context.driver.find_element(By.XPATH, "//button[text()='Login ']").click()
         context.wait.until(ec.url_contains('dash'))
+        print("Login successfull.")
 
 
 def after_scenario(context, scenario):
