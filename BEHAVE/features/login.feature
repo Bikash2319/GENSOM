@@ -1,19 +1,17 @@
-Feature: Test the login functionality of GenSOM ERP
+Feature: Login into the gensom software
+    Scenario: User try to login with valid credentials
+        Given Open the browser and enter the url
+        When user enter the email and password
+        And user click on login button
+        Then user should successfully logged in and dashboard page should be displayed
 
-    Scenario: Login using valid credentials
-        Given User navigate to the website
-        When User enter vaild credentials
-        And Click on login button
-        Then User successfully logged in and navigate to dashboard page of GenSOM ERP
+    Scenario: User try to login with invalid credentials
+        Given Open the browser and enter the url
+        When user entered the wrong credentials
+        And  user click on login button
+        Then Incorrect username or password toaster message should be displayed to user.
 
-    Scenario: Login using invalid credentials
-        Given User navigate to the website
-        When User enter invalid credentials
-        And Click on login button
-        Then User can not able to logged in and system should display the toaster message
-
-    Scenario: Login using without any credentails
-        Given User navigate to the website
-        When User doesnot enter any credentails
-        And Click on login button
-        Then Login button should be disabled
+    Scenario: User try to login without entering credentials
+        Given Open the browser and enter the url
+        When user click on login button without entering credentials
+        Then Login button should be disabled and System should prompt the user to enter email and password
