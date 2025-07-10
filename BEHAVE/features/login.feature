@@ -15,3 +15,10 @@ Feature: Login into the gensom software
         Given Open the browser and enter the url
         When user click on login button without entering credentials
         Then Login button should be disabled and System should prompt the user to enter email and password
+    
+    Scenario: User account locked after three failed login attempts
+        Given Open the browser and enter the url
+        When User click on login button for three times by entering incorrect credentials
+        Then At fouth click user account get locked for an hour and toaster message should be displayed 
+
+

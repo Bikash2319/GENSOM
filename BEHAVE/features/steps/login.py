@@ -62,3 +62,20 @@ def input_field_error_message(context):
 
     login_btn = context.driver.find_element(By.XPATH, "//button[text() = 'Login ']")
     assert not login_btn.is_enabled(), "Login button is disabled, if credentials are not provided before clicking login button."
+
+@when(u'User click on login button for three times by entering incorrect credentials')
+def click_login_button_three_times(context):
+    login_btn = context.driver.find_element(By.XPATH, "//button[text() = 'Login ']")
+    toaster = context.wait.until(ec.visibility_of_element_located((By. ID, "toast-container")))
+    for i in range(3):
+        login_btn.click()
+        print(f"Login click {i+1} done.")
+        print(f"Toaster message : {toaster}")
+        time.sleep(1)
+    
+    
+
+
+@then(u'At fouth click user account get locked for an hour and toaster message should be displayed')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then At fouth click user account get locked for an hour and toaster message should be displayed')
