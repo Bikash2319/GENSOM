@@ -1,9 +1,6 @@
 import time
 from behave import given, when, then
-from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By 
 
 
@@ -65,3 +62,40 @@ def step_impl(context):
     toater_mesage = context.wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='toast-container']"))).text
     assert "Category deleted successfully" in toater_mesage, "Toaster message not displayed as expected."
     print("Category deleted successfully toaster message displayed.")
+    
+@when(u'User click on Edit button for "{Cat_Name}"')
+def step_impl(context, Cat_Name):
+    edit_icon = context.wait.until(ec.element_to_be_clickable((By.XPATH, f"//table/tbody/tr[td[normalize-space()='{Cat_Name}']]/td/a[2]")))
+    time.sleep(0.5)
+    context.actions.move_to_element(edit_icon).click().perform()
+    print(f'Edit button clicked for {Cat_Name}')
+
+@when(u'User change category name to "{Updated_Cat}"')
+def step_impl(context, Updated_Cat):
+    new_category = context.wait.until(ec.presence_of_element_located((By.XPATH, "//input[@formcontrolname='catType']")))
+    new_category.clear()
+    new_category.send_keys(Updated_Cat)
+
+@when(u'User click on Update button')
+def step_impl(context):
+    #save_button = context.wait.until(ec.element_to_be_clickable((By.XPATH, "//button[text()='Save']")))
+    update_button = context.driver.find_element(By.XPATH, "//button[text()='Update']")
+    time.sleep(0.5)
+    context.actions.move_to_element(update_button).click().perform()
+    print('Update button clicked.')    
+
+@then(u'User should see the updated category "{Updated_Cat}" in the list')
+def step_impl(context, Updated_Cat):
+    updated_elememt = context.wait.until(ec.presence_of_element_located((By.XPATH, f"//ngb-highlight[normalize-space(text())='{Updated_Cat}']"))).text
+    assert updated_elememt == Updated_Cat, f"Expected category '{Updated_Cat}' not found in the list."  
+    
+@when(u'User click on the delete button for "{Updated_Cat}"')
+def step_impl(context, Updated_Cat):
+    delete_icon = context.wait.until(ec.element_to_be_clickable((By.XPATH, f"//table/tbody/tr[td[normalize-space()='{Updated_Cat}']]/td/a[3]")))
+    context.actions.move_to_element(delete_icon).click().perform()
+    
+    confirm_yes = context.wait.until(ec.element_to_be_clickable((By.XPATH, "//button[text()='Yes']")))
+    time.sleep(0.5)
+    context.actions.move_to_element(confirm_yes).click().perform()
+    print(f'Delete button clicked for category: {Updated_Cat}')
+    
