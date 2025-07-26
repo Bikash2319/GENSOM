@@ -14,7 +14,7 @@ Examples:
         | category1     |
         | New Device    |
 
-
+@login_required
 Scenario Outline: Verify all the functionality of category module
     Given User logged in and redirect to category master
     When User click on Add Category button
@@ -25,7 +25,7 @@ Scenario Outline: Verify all the functionality of category module
     And User change category name to "<Updated_Cat>"
     And User click on Update button
     Then User should see the updated category "<Updated_Cat>" in the list
-    When User click on Delete button for "<Updated_Cat>"
+    When User click on the Delete button for "<Updated_Cat>"
     Then User should see confirmation toaster message "Category deleted successfully"
 Examples:
         | Cat_Name      | Updated_Cat      |

@@ -16,7 +16,7 @@ def before_scenario(context, scenario):
     context.driver.maximize_window()
     context.wait = WebDriverWait(context.driver, 20)
     context.actions = ActionChains(context.driver)
-    # df = pd.read_excel("C:\\Users\\Bikash Chandra Sahoo\\OneDrive\\Desktop\\Automation\\GenSOM Inputs.xlsx", "Credentials")
+    # df = pd.read_excel("Excel path", "Sheet Name")
     # context.credential = df.to_dict(orient="records")
 
     if 'login_required' in scenario.tags:
@@ -31,8 +31,13 @@ def before_scenario(context, scenario):
         time.sleep(2)
 
 
-# def after_scenario(context, scenario):
-#     context.wait.until(ec.element_to_be_clickable((By.XPATH, "//li[@placement='bottom-end']//img"))).click()
-#     context.wait.until(ec.element_to_be_clickable((By.XPATH, "//header//app-vertical-navigation//a[text() =' Logout']"))).click()
+def after_scenario(context, scenario):
+    profile = context.wait.until(ec.element_to_be_clickable((By.XPATH, "(//img[@class='rounded-circle'])[1]")))
+    time.sleep(0.5)
+    context.actions.move_to_element(profile).click().perform()
+    logout = context.wait.until(ec.element_to_be_clickable((By.XPATH, "//header//app-vertical-navigation//a[text() =' Logout']")))
+    time.sleep(0.5)
+    context.actions.move_to_element(logout).click().perform()
+    context.driver.quit()
     
 

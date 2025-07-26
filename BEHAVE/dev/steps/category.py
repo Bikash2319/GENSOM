@@ -35,8 +35,11 @@ def step_impl(context, Category_Name):
 def step_impl(context):
     #save_button = context.wait.until(ec.element_to_be_clickable((By.XPATH, "//button[text()='Save']")))
     save_button = context.driver.find_element(By.XPATH, "//button[text()='Save']")
-    time.sleep(1)
+    time.sleep(0.5)
     context.actions.move_to_element(save_button).click().perform()
+    toaster_mesage = context.wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='toast-container']")))
+    time.sleep(0.5)
+    toaster_mesage.click()
     print('Save button clicked.')
 
 
@@ -54,13 +57,17 @@ def step_impl(context, Category_Name):
     confirm_yes = context.wait.until(ec.element_to_be_clickable((By.XPATH, "//button[text()='Yes']")))
     time.sleep(0.5)
     context.actions.move_to_element(confirm_yes).click().perform()
+    toaster_mesage = context.wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='toast-container']")))
+    toaster_mesage.click()
     print(f'Delete button clicked for category: {Category_Name}')
 
 
 @then(u'User should see confirmation toaster message "Category deleted successfully"')
 def step_impl(context):
-    toater_mesage = context.wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='toast-container']"))).text
-    assert "Category deleted successfully" in toater_mesage, "Toaster message not displayed as expected."
+    toaster_mesage = context.wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='toast-container']"))).text
+    assert "Category deleted successfully" in toaster_mesage, "Toaster message not displayed as expected."
+    time.sleep(0.5)
+    toaster_mesage.click()
     print("Category deleted successfully toaster message displayed.")
     
 @when(u'User click on Edit button for "{Cat_Name}"')
@@ -82,6 +89,9 @@ def step_impl(context):
     update_button = context.driver.find_element(By.XPATH, "//button[text()='Update']")
     time.sleep(0.5)
     context.actions.move_to_element(update_button).click().perform()
+    toaster_mesage = context.wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='toast-container']")))
+    time.sleep(0.5)
+    toaster_mesage.click()
     print('Update button clicked.')    
 
 @then(u'User should see the updated category "{Updated_Cat}" in the list')
@@ -97,5 +107,9 @@ def step_impl(context, Updated_Cat):
     confirm_yes = context.wait.until(ec.element_to_be_clickable((By.XPATH, "//button[text()='Yes']")))
     time.sleep(0.5)
     context.actions.move_to_element(confirm_yes).click().perform()
+    toaster_mesage = context.wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='toast-container']")))
+    time.sleep(0.5)
+    toaster_mesage.click()
+    
     print(f'Delete button clicked for category: {Updated_Cat}')
     
