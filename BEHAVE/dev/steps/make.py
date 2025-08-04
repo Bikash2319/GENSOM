@@ -50,7 +50,10 @@ def step_impl(context, make, updated_make):
     time.sleep(0.5)
     context.actions.move_to_element(edit_icon).click().perform()
     
-    context.driver.find_element(By.XPATH, "//input[@formcontrolname='make_name']").send_keys(updated_make)
+    make_input = context.driver.find_element(By.XPATH, "//input[@formcontrolname='make_name']")
+    time.sleep(0.5)
+    make_input.clear()
+    make_input.send_keys(updated_make)
     
     update = context.wait.until(ec.element_to_be_clickable((By.XPATH,"//button[text()='Update']")))
     time.sleep(0.5)
@@ -75,11 +78,15 @@ def step_impl(context, updated_make):
 @then(u'User click on delete icon of "{updated_make}" and confirms the action')
 def step_impl(context, updated_make):
     delete_icon = context.wait.until(ec.element_to_be_clickable\
-        ((By.XPATH, f"//table/tbody/tr[td[normalize-space()='{Updated_make}']]/td/a[3]")))
+        ((By.XPATH, f"//table/tbody/tr[td[normalize-space()='{updated_make}']]/td/a[3]")))
     context.actions.move_to_element(delete_icon).click().perform()
 
 
 @then(u'Make should be deleted, toaster message should be displayed and details should be removed from the table')
 def step_impl(context):
-    pass
+    toaster = context.wait.until(ec.presence_of_element_located((By.XPATH, "//div[@id='toast-container']")))
+    print(toaster.text)
+    toaster.click()
+    
+    
 

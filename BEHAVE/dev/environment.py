@@ -6,18 +6,22 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
-# df = pd.read_excel("C:\\Users\\Bikash Chandra Sahoo\\OneDrive\\Desktop\\Automation\\GenSOM Inputs.xlsx", "Credentials")
+file_path = "C:\\Automation\\GENSOM\\BEHAVE\\devn\\variables.xlsx"
+# df = pd.read_excel("C:\\Automation\\GENSOM\\BEHAVE\\devn\\variables.xlsx", "Credentials")
 # credential = df.to_dict(orient="records")
-# file_path = "C:\\Users\\Bikash Chandra Sahoo\\OneDrive\\Desktop\\Automation\\GenSOM Inputs.xlx"
 
 
-def before_scenario(context, scenario):
+def before_scenario(context, scenario, file_path):
     context.driver = webdriver.Chrome()
     context.driver.maximize_window()
     context.wait = WebDriverWait(context.driver, 20)
     context.actions = ActionChains(context.driver)
-    # df = pd.read_excel("Excel path", "Sheet Name")
-    # context.credential = df.to_dict(orient="records")
+    
+    context.valid_df = pd.read_excel(file_path, "Valid")
+    context.valid = context.valid_df.to_dict(orient="records")
+    
+    context.invalid_df = pd.read_excel(file_path, "Invalid")
+    context.invalid = context.invalid.df.to_dict(orient="records")
 
     if 'login_required' in scenario.tags:
         context.driver.get("https://refex.dev.gensomerp.com/login")
